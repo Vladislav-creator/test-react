@@ -55,6 +55,7 @@
     border: 2px solid green;
     margin-bottom: 25px;
     background: rgba(161,21,207, 0.5);
+    cursor: pointer;
 }
 .commentTitle{
     margin-top: 0;

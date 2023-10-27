@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { Component } from 'react'
 import css from './App.module.css'
 import { Loader } from 'components/Loader/Loader';
+
 // {
 //   "userId": 1,
 //   "id": 1,
@@ -72,7 +73,8 @@ this.setState({
 }
 
 componentDidMount(){
-  this.fetchPosts()
+   this.fetchPosts()
+ 
 
   const selectedPostId = localStorage.getItem('selectedPostId');
   const parsedId = JSON.parse(selectedPostId);
