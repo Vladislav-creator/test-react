@@ -19,14 +19,18 @@ export class App extends Component {
 state = {
   posts: null,
   isLoading: false,
+  comments: null,
+
   error: null,
+  selectedPostId: null,
 };
 
 fetchPosts = async () => {
+  try {
   this.setState({
     isLoading: true,
   })
- try {const{data} = await axios.get('https://jsonplaceholder.typicode.com/posts');
+ const{data} = await axios.get('https://jsonplaceholder.typicode.com/posts');
 
   this.setState({
     posts: data,
@@ -40,13 +44,42 @@ fetchPosts = async () => {
     })
   }
 };
+
+fetchPostsComments = async () => {
+  try {
+  this.setState({
+    isLoading: true,
+  })
+ const{data} = await axios.get(`https://jsonplaceholder.typicode.com/comments?postId=${this.state.selectedPostId}`);
+
+  this.setState({
+    comments: data,
+  })} catch(error){
+    this.setState({
+      error: error.message,
+    });
+  } finally{
+    this.setState({
+      isLoading: false,
+    })
+  }
+};
+
+onSelectedPostId = (postId) => { 
+this.setState({
+  selectedPostId: postId,
+})
+}
+
 componentDidMount(){
   this.fetchPosts()
 }
-// async componentDidMount() {
-//   const{data} = await axios.get("https://jsonplaceholder.typicode.com/posts");
-//   this.setState({ posts: data });
-// }
+componentDidUpdate(_, prevState){
+if(prevState.selectedPostId !== this.state.selectedPostId){
+  this.fetchPostsComments();
+}
+}
+
   render() {
     return (
       <div className={css.container}>
@@ -59,7 +92,7 @@ componentDidMount(){
       {this.state.posts !== null && 
       this.state.posts.map(post =>{
       return(
-      <li key={post.id}className={css.postListItem}>
+      <li key={post.id} onClick={() => this.onSelectedPostId(post.id)} className={css.postListItem}>
         <h2 className={css.itemTitle}>{post.title}</h2>
         <p className={css.itemBody}><b>Body</b>{post.body}
         </p>
@@ -67,12 +100,17 @@ componentDidMount(){
     })}
         </ul>
         <ul className={css.commentsList}>
-        <li className={css.commentsListItem}>
-        <h2 className={css.commentTitle}>id labore ex et quam laborum</h2>
-        <h3 className={css.commentEmail}>Eliseo@gardner.biz</h3>
-        <p className={css.itemBody}><b>Body</b>laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium
+        <li  className={css.commentsListItem}>Selected post Id: {this.state.selectedPostId}</li>
+       {this.state.comments !== null &&
+       this.state.comments.map(comment =>{
+          return(
+        <li key={comment.id} className={css.commentsListItem}>
+        <h2 className={css.commentTitle}>Name: {comment.name}</h2>
+        <h3 className={css.commentEmail}>Email: {comment.email}</h3>
+        <p className={css.itemBody}><b>Body</b>{comment.body}
         </p>
-      </li>
+      </li>)
+      })}
         </ul>
         </div>
      
