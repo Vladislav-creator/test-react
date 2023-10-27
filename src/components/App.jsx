@@ -93,21 +93,23 @@ if(prevState.selectedPostId !== this.state.selectedPostId){
       this.state.posts.map(post =>{
       return(
       <li key={post.id} onClick={() => this.onSelectedPostId(post.id)} className={css.postListItem}>
+        <h3 className={css.itemTitle}>Post Id:{post.id}</h3>
         <h2 className={css.itemTitle}>{post.title}</h2>
-        <p className={css.itemBody}><b>Body</b>{post.body}
+        <p className={css.itemBody}><b>Body: </b>{post.body}
         </p>
       </li>)
     })}
         </ul>
         <ul className={css.commentsList}>
-        <li  className={css.commentsListItem}>Selected post Id: {this.state.selectedPostId}</li>
+        <li  className={css.commentsListItem}><h2 className={css.commentTitle}>Selected post Id: {this.state.selectedPostId}</h2></li>
        {this.state.comments !== null &&
        this.state.comments.map(comment =>{
           return(
         <li key={comment.id} className={css.commentsListItem}>
+          <h3 className={css.itemTitle}>Comment Id:{comment.id}</h3>
         <h2 className={css.commentTitle}>Name: {comment.name}</h2>
         <h3 className={css.commentEmail}>Email: {comment.email}</h3>
-        <p className={css.itemBody}><b>Body</b>{comment.body}
+        <p className={css.itemBody}><b>Body: </b>{comment.body}
         </p>
       </li>)
       })}

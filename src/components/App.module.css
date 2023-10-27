@@ -39,16 +39,17 @@
     
 }
 .commentsList{
+    top: 0;
+    right: 0;
     position: sticky;
     list-style: none;
     padding: 0;
-    position: relative;
     max-height: 100vh;
     display: flex;
     flex-direction: column;
+    overflow: overlay;
 }
 .commentsListItem{
-    
     top: 15px;
     padding: 20px;
     border: 2px solid green;
