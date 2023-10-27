@@ -73,13 +73,24 @@ this.setState({
 
 componentDidMount(){
   this.fetchPosts()
+
+  const selectedPostId = localStorage.getItem('selectedPostId');
+  const parsedId = JSON.parse(selectedPostId);
+
+   if (selectedPostId ) {
+     this.setState({ selectedPostId: parsedId });
+   }
 }
+
 componentDidUpdate(_, prevState){
 if(prevState.selectedPostId !== this.state.selectedPostId){
   this.fetchPostsComments();
-}
-}
 
+ 
+     console.log('comments were updated');
+     localStorage.setItem('selectedPostId', JSON.stringify(this.state.selectedPostId));
+}
+}
   render() {
     return (
       <div className={css.container}>
